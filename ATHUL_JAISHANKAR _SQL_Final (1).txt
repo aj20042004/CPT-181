@@ -1,0 +1,156 @@
+
+
+
+
+                                              ( S.R.ATHUL JAISHANKAR ) - FinalExam-SQL
+
+--1
+
+select OWNER_NUM, last_name , first_name 
+from owner 
+
+--2
+
+select last_name , first_name 
+from owner
+where city='bowton'
+
+--3
+
+select location_num , unit_num  
+from condo_unit
+where SQR_FT<=1200
+
+--4
+
+select location_num , unit_num 
+from CONDO_UNIT
+where BDRMS=3
+
+
+--5
+
+select unit_num 
+from CONDO_UNIT 
+where BDRMS = 2 and LOCATION_NUM = 2
+
+--6
+
+select condo_id , CONDO_FEE  
+from CONDO_UNIT 
+where CONDO_FEE > 550 and condo_fee < 650  
+
+--7
+
+select unit_num 
+from CONDO_UNIT
+where LOCATION_NUM = 1 and CONDO_FEE < 500
+
+--8
+
+select condo_id , category_num , est_hours , (est_hours * 35 ) as estimated_cost 
+from SERVICE_REQUEST
+
+--9 
+
+select owner_num , last_name , state 
+from owner 
+where state = 'FL' or STATE = 'GA' or state = 'sc'
+
+--10
+
+select location_num , unit_num , sqr_ft , condo_fee 
+from condo_unit 
+order by  CONDO_FEE , SQR_FT
+
+--11
+
+select location_num, count(bdrms) as countOfOneBedroom
+from condo_unit 
+where bdrms=1
+group by LOCATION_NUM
+
+--12
+
+select format(sum(condo_fee),'$ #.00') as totalCondoFee
+from CONDO_UNIT
+
+--13
+
+select * 
+from SERVICE_REQUEST
+where DESCRIPTION like '%pantry%'
+
+--14
+
+select a.location_num , unit_num , condo_fee , b.owner_num , last_name , first_name 
+from CONDO_UNIT a , OWNER b 
+where a.OWNER_NUM = b.OWNER_NUM
+
+--15
+
+select a.condo_id , description , status , b.category_num , category_description 
+from SERVICE_REQUEST a , SERVICE_CATEGORY b 
+where a.CATEGORY_NUM=b.CATEGORY_NUM and 
+CATEGORY_DESCRIPTION = 'janitorial' and 
+STATUS = 'open' or status='verified'
+
+--16 
+
+select a.unit_num , b.unit_num 
+from CONDO_UNIT a , condo_unit b
+where a.SQR_FT = b.SQR_FT
+and  a.UNIT_NUM < b.UNIT_NUM 
+order by a.UNIT_NUM , b.UNIT_NUM
+
+--17
+
+select a.sqr_ft , b.owner_num , last_name , first_name 
+from condo_unit a , owner b 
+where a.OWNER_NUM=b.OWNER_NUM 
+and location_num = 1 and 
+BDRMS=3
+
+--18 
+
+select a.location_num , unit_num , condo_fee
+from CONDO_UNIT a, owner b
+where a.OWNER_NUM = b.OWNER_NUM 
+and city = 'bowton' 
+and BDRMS = 1 
+
+--19 
+
+select a.condo_id , sqr_ft , owner_num , b.service_id , est_hours , spent_hours 
+from CONDO_UNIT a , SERVICE_REQUEST b 
+where a.CONDO_ID = b.CONDO_ID and 
+CATEGORY_NUM = 4 
+
+--20 (skip)
+--21 (skip)
+--22  (skip)
+
+--23
+
+delete from LARGE_CONDO where OWNER_NUM = 'AN175' 
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+--(For creating and 
+--       inserting data in large_condo)
+
+CREATE TABLE LARGE_CONDO
+(LOCATION_NUM DECIMAL(2,0),
+UNIT_NUM CHAR(3),
+BDRMS DECIMAL(2,0),
+BATHS DECIMAL(2,0),
+CONDO_FEE DECIMAL(6,2),
+OWNER_NUM CHAR(5),
+PRIMARY KEY(LOCATION_NUM, UNIT_NUM) );
+
+insert into LARGE_CONDO 
+select location_num , unit_num , bdrms , 
+baths , condo_fee , owner_num  
+from CONDO_UNIT 

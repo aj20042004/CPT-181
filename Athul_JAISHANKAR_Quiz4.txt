@@ -1,0 +1,147 @@
+
+                                                           ( S.R. ATHUL JAISHANKAR)
+                                      
+                                                                   ( Quiz 4-SQL)
+
+
+                                                            Colonial Adventure Tours ( pg - 164)
+
+
+
+select * from Col_TRIP
+select * from Col_TRIP_GUIDES
+select * from Col_RESERVATION
+select * from Col_GUIDE
+select * from Col_CUSTOMER
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ANSWER  1 :
+
+
+SELECT R.RESERVATION_ID,R.TRIP_ID,R.CUSTOMER_NUM,C.LAST_NAME 
+FROM Col_RESERVATION R, Col_CUSTOMER C 
+WHERE R.CUSTOMER_NUM=C.CUSTOMER_NUM ORDER BY LAST_NAME 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ANSWER  2 :
+
+SELECT R.RESERVATION_ID,R.TRIP_ID,R.NUM_PERSONS
+FROM Col_RESERVATION R , Col_CUSTOMER C 
+WHERE R.CUSTOMER_NUM = C.CUSTOMER_NUM AND 
+FIRST_NAME='RYAN' 
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+ANSWER  3 :
+
+
+SELECT T.TRIP_NAME FROM Col_TRIP T,Col_TRIP_GUIDES G,Col_GUIDE O
+WHERE O.GUIDE_NUM=G.GUIDE_NUM AND G.TRIP_ID=T.TRIP_ID
+AND LAST_NAME='ABRAMS'
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ANSWER  4 :
+
+
+SELECT T.TRIP_NAME,T.TYPE 
+FROM Col_TRIP T,Col_TRIP_GUIDES G,Col_GUIDE C
+WHERE C.GUIDE_NUM=G.GUIDE_NUM AND 
+G.TRIP_ID=T.TRIP_ID AND TYPE='BIKING' AND 
+LAST_NAME='BOYERS'
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ANSWER  5 :
+
+
+SELECT C.LAST_NAME,T.TRIP_NAME,T.START_LOCATION 
+FROM Col_TRIP T,Col_CUSTOMER C,Col_RESERVATION R 
+WHERE T.TRIP_ID=R.TRIP_ID AND R.CUSTOMER_NUM=C.CUSTOMER_NUM
+AND TRIP_DATE='2016-07-23' 
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+ANSWER  6 :
+
+
+SELECT R.RESERVATION_ID,R.TRIP_ID,R.TRIP_DATE
+FROM Col_RESERVATION R,Col_TRIP T 
+WHERE T.TRIP_ID=R.TRIP_ID AND STATE IN ('ME')
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ANSWER  7 :
+
+
+SELECT RESERVATION_ID, TRIP_ID, TRIP_DATE 
+FROM Col_RESERVATION 
+WHERE EXISTS ( SELECT C.TRIP_ID  FROM Col_TRIP C WHERE STATE='ME' 
+AND C.TRIP_ID=Col_RESERVATION.TRIP_ID)
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ANSWER  8 :
+
+
+
+SELECT Col_GUIDE.LAST_NAME , Col_GUIDE.FIRST_NAME, Col_TRIP.TYPE 
+FROM Col_GUIDE ,Col_TRIP ,Col_TRIP_GUIDES 
+WHERE Col_TRIP.TRIP_ID = Col_TRIP_GUIDES.TRIP_ID AND
+Col_TRIP_GUIDES.GUIDE_NUM = Col_GUIDE.GUIDE_NUM
+AND TYPE='PADDLING'
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ANSWER  9 :
+
+
+SELECT G.LAST_NAME,G.FIRST_NAME,T.TYPE 
+FROM Col_GUIDE G,Col_TRIP T,Col_TRIP_GUIDES R
+WHERE T.TRIP_ID=R.TRIP_ID AND R.GUIDE_NUM=G.GUIDE_NUM
+AND TYPE='PADDLING'
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ANSWER  10 :
+
+
+SELECT A.TRIP_ID , A.TRIP_NAME , B.TRIP_ID,B.TRIP_NAME , A.START_LOCATION 
+FROM Col_TRIP A , Col_TRIP B 
+WHERE A.START_LOCATION=B.START_LOCATION AND A.TRIP_ID < B.TRIP_ID
+ORDER BY A.START_LOCATION , A.TRIP_ID , B. TRIP_ID 
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ANSWER  11 :
+
+
+SELECT A.TRIP_NAME 
+FROM Col_TRIP A,Col_RESERVATION R 
+WHERE A.TRIP_ID=R.TRIP_ID AND 
+TYPE='HIKING' ORDER BY TRIP_NAME ASC
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ANSWER  12 :
+
+
+SELECT A.CUSTOMER_NUM ,A.LAST_NAME, A.FIRST_NAME 
+FROM Col_CUSTOMER A, Col_RESERVATION B 
+WHERE A.CUSTOMER_NUM=B.CUSTOMER_NUM 
+UNION
+SELECT CUSTOMER_NUM ,LAST_NAME, FIRST_NAME 
+FROM Col_CUSTOMER 
+WHERE STATE='NJ'
+UNION
+SELECT A.CUSTOMER_NUM ,A.LAST_NAME, A.FIRST_NAME 
+FROM Col_CUSTOMER A, Col_RESERVATION B 
+WHERE A.CUSTOMER_NUM=B.CUSTOMER_NUM AND STATE='NJ'
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------

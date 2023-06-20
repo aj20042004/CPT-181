@@ -1,0 +1,8 @@
+
+8. The Service Rep table includes a Start Date field in the format, mm/dd/yyyy. How could 
+you add an input mask for the Start Date field?
+
+ANSWER : 
+For adding an input mask to start date field . you need to open the service rep table in 
+design view and under the general , you can see the input mask option . click on the 3dots which 
+is in end of the row and a box will appear , select the option " short date " on it .  

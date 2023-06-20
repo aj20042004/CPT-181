@@ -1,0 +1,153 @@
+
+
+(S.R.ATHUL JAISHANKAR)   
+          
+                       QUIZ 3 -SQL 
+
+COLONIAL ADVENTURE TOURS 
+      
+          ( QUESTION  AND ANSWER ) 
+
+QUESTION  1  :  List the last name of each guide that does not live in Massachusetts (MA). 
+
+
+ANSWER   :       select last_name from Col_GUIDE where STATE !='MA'
+
+
+QUESTION  2 :  List the trip name of each trip that has the type Biking. 
+
+
+ANSWER    :       SELECT TRIP_NAME FROM Col_TRIP WHERE TYPE='BIKING' 
+
+
+QUESTION  3 :  List the trip name of each trip that has the season Summer.
+
+
+ANSWER  :      SELECT TRIP_NAME FROM COL_TRIP WHERE SEASON='SUMMER'
+
+
+QUESTION  4 :  List the trip name of each trip that has the type Hiking and that has a distance longer than 
+1 O miles.
+
+
+ANSWER  :   SELECT TRIP_NAME FROM Col_TRIP WHERE TYPE='HIKING' AND DISTANCE>10
+
+
+QUESTION 5 :  List the customer number, customer last name, and customer first name of each customer 
+that lives in New Jersey (NJ), New York (NY) or Pennsylvania (PA). Use the IN operator 
+in your command.
+
+
+ANSWER  :    SELECT CUSTOMER_NUM, LAST_NAME, FIRST_NAME FROM Col_CUSTOMER WHERE STATE IN('NJ','NY','PA')
+
+
+QUESTION  6 :  Repeat Exercise 5 and sort the records by state in descending order and then by customer last name in ascending order.
+
+
+ANSWER  :   SELECT CUSTOMER_NUM, LAST_NAME, FIRST_NAME,STATE FROM Col_CUSTOMER WHERE STATE IN('NJ','NY','PA') ORDER BY STATE DESC, LAST_NAME ASC
+
+
+QUESTION  7 :  How many trips are in the states of Maine (ME) or Massachusetts (MA)?8. How many trips originate in each state? 
+
+
+ANSWER  : SELECT COUNT(*) FROM Col_TRIP WHERE STATE='ME' OR STATE= 'MA' 
+( 16 TRIPS ) 
+
+
+QUESTION  8 : How many trips originate in each state? 
+
+
+ANSWER  :   SELECT COUNT(*),STATE  FROM Col_TRIP GROUP BY STATE 
+
+                      [ CT - 2
+                        MA - 4 
+                       ME - 12
+                        NH - 19 
+                         VT - 4 ]
+
+
+QUESTION  9 :  How many reservations include a trip price that is greater than $20 but less than $75?
+
+
+ANSWER :  SELECT COUNT(*) FROM Col_RESERVATION WHERE TRIP_PRICE>20 AND TRIP_PRICE<75
+( 13 RESERVATION )
+
+
+QUESTION  10 : How many trips of each type are there?
+
+
+ANSWER  :  SELECT COUNT(*),TYPE FROM Col_TRIP GROUP BY TYPE 
+
+[ BIKING - 8
+  HIKING - 24
+  PADDING -9 ]
+
+
+QUESTION  11  :  Colonial Adventure Tours calculates the total price of a trip by adding the trip price plus 
+other fees and multiplying the result by the number of persons included in the reservation. 
+List the reservation ID, trip ID, customer number, and total price for all reservations where 
+the number of persons is greater than four. Use the column name TOTAL_PRICE for the 
+calculated field.
+
+
+ANSWER  :   SELECT RESERVATION_ID , TRIP_ID , CUSTOMER_NUM , SUM(TRIP_PRICE+OTHER_FEES)*NUM_PERSONS AS TOTAL_PRICE FROM Col_RESERVATION WHERE NUM_PERSONS>4 GROUP BY
+RESERVATION_ID, TRIP_ID, CUSTOMER_NUM, NUM_PERSONS
+
+
+QUESTION  12 :  Find the name of each trip containing the word "Pond."
+
+ 
+ANSWER  :   SELECT TRIP_NAME FROM Col_TRIP WHERE TRIP_NAME LIKE '%POND%'
+
+
+QUESTION  13 :  List the guide's last name and guide's first name for all guides that were hired before 
+June 10, 2013.
+
+
+ANSWER  :   SELECT LAST_NAME , FIRST_NAME,HIRE_DATE FROM Col_GUIDE WHERE HIRE_DATE<'2013-06-10'
+
+
+QUESTION  14   :  What is the average distance and the average maximum group size for each type of trip?
+
+
+ANSWER  :  SELECT FORMAT(AVG(DISTANCE),('$#.00')),FORMAT(AVG(MAX_GRP_SIZE),('$#.00')) FROM Col_TRIP GROUP BY TYPE
+
+
+QUESTION   15  : Display the different seasons in which trips are offered. List each season only once. 
+
+
+ANSWER  :  SELECT DISTINCT(SEASON) FROM Col_TRIP
+
+
+QUESTION   16 :  List the reservation IDs for reservations that are for a paddling trip. (Hint: Use a subquery.
+
+
+ANSWER  :    SELECT R.RESERVATION_ID FROM Col_RESERVATION R WHERE R.TRIP_ID IN(SELECT DISTINCT(TRIP_ID) FROM Col_TRIP WHERE TYPE='PADDLING') 
+
+
+QUESTION   17 :   What is the longest distance for a biking trip? 
+
+
+ANSWER   :   SELECT MAX(DISTANCE) FROM COL_TRIP WHERE TYPE='BIKING'
+
+
+QUESTION   18 :   For each trip in the RESERVATION table that has more than one reservation, group by 
+trip ID and sum the trip price. (Hint: Use the COUNT function and a HAVING clause.) 
+
+
+ANSWER  :    SELECT TRIP_ID,SUM(TRIP_PRICE) FROM Col_RESERVATION GROUP BY TRIP_ID HAVING COUNT(TRIP_ID)>1 
+
+
+QUESTION   19 :  How many current reservations does Colonial Adventure Tours have and what is the total 
+number of persons for all reservations?
+
+
+ANSWER   :  SELECT COUNT(*),SUM(NUM_PERSONS) FROM Col_RESERVATION
+
+
+     QUESTION  20 :  List the reservation ID and trip ID for all trips that occur in the month of July, 2016. There 
+    are multiple ways to create this query. Write an alternate command that would produce 
+    the same result.
+
+
+    ANSWER :  SELECT RESERVATION_ID,TRIP_ID FROM Col_RESERVATION WHERE TRIP_DATE>='2016-07-01' AND TRIP_DATE<='2016-07-31'

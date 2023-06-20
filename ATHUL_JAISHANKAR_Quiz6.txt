@@ -1,0 +1,79 @@
+S.R.ATHUL JAISHANKAR (Quiz6-SQL)
+
+
+              COLONIAL   ADVENTURE   TOURS 
+
+   - 1 ANSWER 
+
+
+  create table paddling ( trip_id decimal(3,0) not null primary key , 
+  trip_name char(75) , state char(2) , distance decimal(4,0), 
+  max_grp_size decimal(4,0) , season char(20))
+
+
+  - 2 ANSWER 
+
+insert into paddling values(7,'Bloomfield - Maidstone ','CT',10,6,'late spring')
+insert into paddling values(11,'Chocorua Lake Tour','NH',12,15,'summer')
+insert into paddling values(19,'Mason''sFarm ','CT',12,7,'late spring')
+insert into paddling values(20,'Lake Mephremagog Tour ','VT',8,15,'late spring')                                                     
+insert into paddling values(22,'Long Pond Tour' ,'ME',12,10,'summer')                                                            
+insert into paddling values(23,'Lower Pond Tour','ME',8,15,'late spring')                                                            
+insert into paddling values(31,'Missisquoi River - VT  ','VT',12,10,'summer')                                                    
+insert into paddling values(32,'Northern Forest Canoe Trail','NH',15,10,'summer')                                                
+insert into paddling values(34,'Pontook Reservoir Tour ','NH',15,14,'late spring')             
+
+
+
+- 3 ANSWER 
+
+update Paddling set max_grp_size = max_grp_size + 2 where state='CT'
+
+
+
+- 4 ANSWER 
+
+ insert into paddling values(43,'lake champlain tour','VT',12,16,'summer')
+
+
+
+-5 ANSWER 
+
+delete from Paddling where trip_id=23
+
+
+
+-6 ANSWER 
+
+update Paddling set distance=null where trip_name='Pontook Reservoir Tour'
+
+
+
+-7 ANSWER 
+
+alter table paddling add DIFFICULTY_LEVEL CHAR(3) default('MOD') not null
+
+
+
+-8 ANSWER 
+
+update paddling set difficulty_level='HRD' where trip_name='lake champlain tour'
+
+
+
+-9 ANSWER 
+
+alter table paddling alter column season char(25)
+
+
+
+-10 ANSWER 
+
+alter table paddling alter column difficulty_level char(3) not null
+
+
+
+-11 ANSWER 
+
+drop table paddling 
+
